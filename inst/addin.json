@@ -10,4 +10,4 @@
 },{
 "file":"./src/bin/express.js",
 "selector":"startServer",
-"replacemant":"\nconst sqlRoutes = require('../routers/mail');\nserver.use('/api/auth/mail', sqlRoutes);\n"}]
+"replacemant":"\nconst mailRoutes = require('../routers/mail');\nserver.use('/api/auth/mail', mailRoutes);\n"}]
