@@ -1,28 +1,27 @@
-import mailUtils from "@/includes/nodemailer/nodemailer";
-import { checkReqErrors } from "@/includes/status";
-
+import mailUtils from '@/includes/nodemailer/nodemailer';
+import {checkReqErrors} from '@/includes/status';
 
 export default (req, res) => {
   const {
-    query: { tmpl },
+    query: {tmpl},
   } = req;
 
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     if (!req.headers.to || !tmpl) {
-      return { error: "Kein EmpfÃ¤nger angegeben" };
+      return {error: 'Kein EmpfÃ¤nger angegeben'};
     }
     mailUtils
       .loadTemplate(`./includes/nodemailer/template/${tmpl}.html`)
-      .then((data) => {
-        mailUtils.templateMail(req, res, data).then((e) => {
+      .then(data => {
+        mailUtils.templateMail(req, res, data).then(e => {
           checkReqErrors(e, res);
         });
       })
-      .catch((error) => {
-        checkReqErrors({ error: error }, res);
+      .catch(error => {
+        checkReqErrors({error: error}, res);
       });
   } else {
-    checkReqErrors({ error: "No End Point to this Request" }, res);
+    checkReqErrors({error: 'No End Point to this Request'}, res);
   }
 };
 

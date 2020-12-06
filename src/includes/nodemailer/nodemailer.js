@@ -1,6 +1,6 @@
-const nodemailer = require("nodemailer");
-const SMTPConnection = require("nodemailer/lib/smtp-connection");
-const fs = require("fs");
+const nodemailer = require('nodemailer');
+const SMTPConnection = require('nodemailer/lib/smtp-connection');
+const fs = require('fs');
 /**
  *
  * @param {string} mailTo - mail reciver
@@ -25,7 +25,7 @@ async function newMail(req, res) {
     let info = await transporter.sendMail({
       from: process.env.MailSender,
       to: req.body.to ? req.body.to : null,
-      subject: req.body.subject ? req.body.subject : "Kein Betreff",
+      subject: req.body.subject ? req.body.subject : 'Kein Betreff',
       replyTo: req.body.replay ? req.body.replay : null,
       html: req.body.html ? req.body.html : null,
       attachments: req.body.files ? JSON.parse(req.body.files) : null,
@@ -61,7 +61,7 @@ async function templateMail(req, res, template) {
   let info = await transporter.sendMail({
     from: process.env.MailSender,
     to: req.body.to ? req.body.to : null,
-    subject: req.body.subject ? req.body.subject : "Keinn Betreff",
+    subject: req.body.subject ? req.body.subject : 'Keinn Betreff',
     replyTo: req.body.replay ? req.body.replay : null,
     html: req.body.html ? req.body.html : null,
     attachments: req.body.files ? JSON.parse(req.body.files) : null,
@@ -89,15 +89,15 @@ async function testMail(req, res) {
   let connection = new SMTPConnection(transporter);
   var event = connection;
 
-  event.on("connect", function (connect) {
+  event.on('connect', function (connect) {
     connection.close();
     // return;
   });
 
-  event.on("end", function (end) {});
+  event.on('end', function (end) {});
 
-  event.on("error", function (error) {
-    return { error: error };
+  event.on('error', function (error) {
+    return {error: error};
   });
 
   let info = await connection.connect();
@@ -118,18 +118,18 @@ async function findTemplates(p) {
   const files = await fs.promises.readdir(p, {});
 
   if (files) return files;
-  return "No Templates found";
+  return 'No Templates found';
 }
 
 module.exports.findTemplates = findTemplates;
 
 async function loadTemplate(p) {
-  const file = fs.promises.readFile(p, "utf8", (err, data) => {
-    if (err) console.debug({ error: "Template konnte nicht geladen werden" });
+  const file = fs.promises.readFile(p, 'utf8', (err, data) => {
+    if (err) console.debug({error: 'Template konnte nicht geladen werden'});
     return data;
   });
 
-  if (!file) return { error: "Template nicht gefunden" };
+  if (!file) return {error: 'Template nicht gefunden'};
   return file;
 }
 
